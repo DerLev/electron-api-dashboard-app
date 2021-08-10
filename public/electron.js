@@ -206,16 +206,6 @@ ipcMain.on('app', (e, arg) => {
   if(arg == 'update') {
     autoUpdater.quitAndInstall();
   }
-
-  if(arg == 'autostart-disable') {
-    autoLaunch.disable();
-    store.set('autoStart', false);
-  }
-
-  if(arg == 'autostart-enable') {
-    autoLaunch.enable();
-    store.set('autoStart', true);
-  }
 });
 
 ipcMain.on('menu', (e, arg) => {
@@ -234,45 +224,6 @@ ipcMain.on('menu', (e, arg) => {
         type: 'separator'
       },
       {
-        label: 'Auto Start',
-        type: 'submenu',
-        submenu: [
-          {
-            label: 'Enabled',
-            type: 'radio',
-            checked: autoStart,
-            click: () => { autoLaunch.enable(); store.set('autoStart', true); }
-          },
-          {
-            label: 'Disabled',
-            type: 'radio',
-            checked: !autoStart,
-            click: () => { autoLaunch.disable(); store.set('autoStart', false); }
-          }
-        ]
-      },
-      {
-        label: 'Minimize to tray',
-        type: 'submenu',
-        submenu: [
-          {
-            label: 'Enabled',
-            type: 'radio',
-            checked: minimizeToTray,
-            click: () => { store.set('minimizeToTray', true) }
-          },
-          {
-            label: 'Disabled',
-            type: 'radio',
-            checked: !minimizeToTray,
-            click: () => { store.set('minimizeToTray', false) }
-          }
-        ]
-      },
-      {
-        type: 'separator'
-      },
-      {
         label: 'Quit App',
         click: () => app.quit()
       }
@@ -284,6 +235,30 @@ ipcMain.on('menu', (e, arg) => {
 
 ipcMain.on('link', (e, arg) => {
   shell.openExternal(arg);
+});
+
+ipcMain.on('settings', (e, arg) => {
+  if(arg == 'get') {
+    e.returnValue = store.getAll();
+  }
+
+  if(arg == 'autostart-off') {
+    store.set('autoStart', false);
+    autoLaunch.disable();
+  }
+
+  if(arg == 'autostart-on') {
+    store.set('autoStart', true);
+    autoLaunch.enable();
+  }
+
+  if(arg == 'minmizeToTray-off') {
+    store.set('minimizeToTray', false);
+  }
+
+  if(arg == 'minmizeToTray-on') {
+    store.set('minimizeToTray', true);
+  }
 });
 
 autoUpdater.on('update-available', () => {

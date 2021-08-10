@@ -8,26 +8,32 @@ a {
 
 h1 {
   @apply text-3xl font-medium;
+  font-family: theme('fontFamily.heading');
 }
 
 h2 {
   @apply text-2xl font-medium;
+  font-family: theme('fontFamily.heading');
 }
 
 h3 {
   @apply text-xl font-medium;
+  font-family: theme('fontFamily.heading');
 }
 
 h4 {
   @apply text-lg font-medium;
+  font-family: theme('fontFamily.heading');
 }
 
 h5 {
   @apply text-base font-medium;
+  font-family: theme('fontFamily.heading');
 }
 
 h6 {
   @apply text-base;
+  font-family: theme('fontFamily.heading');
 }
 
 .appBar {
@@ -47,5 +53,5 @@ h6 {
 }
 
 .simplebar-scrollbar::before {
-  background-color: red;
+  background-color: theme('colors.gray.700') !important;
 }
