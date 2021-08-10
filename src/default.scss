@@ -45,3 +45,7 @@ h6 {
     }
   }
 }
+
+.simplebar-scrollbar::before {
+  background-color: red;
+}

@@ -45,7 +45,7 @@ function Navbar() {
   });
 
   return (
-    <div className="bg-gray-900 border-b border-gray-800 flex justify-between appBar items-center pl-1 sticky top-0 left-0 right-0">
+    <div className="bg-gray-900 border-b border-gray-800 flex justify-between appBar items-center pl-1 sticky top-0 left-0 right-0 z-50">
       <span className="text-gray-500" onClick={ctxMenu}>{ title }</span>
       <div className="flex">
         {
