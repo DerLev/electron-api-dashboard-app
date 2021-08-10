@@ -1,4 +1,4 @@
-# Getting Started with `electron-react-app`
+# Getting Started with `electron-api-dashboard-app`
 
 ## Available Scripts
 
@@ -23,5 +23,15 @@ For your ready electron app you will need to run the next command.
 
 Your App will be built to an installable `.exe` file in the `dist` folder.\
 You will find your file (e.g. `electron-react-app Setup 0.1.0-beta.4.exe`) and a few other files in it.
+
+**Note: You will need to change the `version` in `package.json` for publishing**
+
+### `npm run deploy`
+
+Your App will be built to an installable `.exe` file in the `dist` folder
+and uploaded to a drafted release on GitHub.
+
+You will need to specify the env variable `GH_TOKEN`.\
+The access token needs the `repo` scope.
 
 **Note: You will need to change the `version` in `package.json` for publishing**
