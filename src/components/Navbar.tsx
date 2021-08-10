@@ -8,13 +8,13 @@ function Navbar() {
     <div style={{ height: 'calc(100vh - 1.313rem)' }} className="flex flex-col justify-between items-center border-r-2 border-gray-800 p-2 mr-1 z-40">
       <ul>
         <Navitem icon={faHome} tooltip="Home" link="/" />
-        <Navitem icon={faLink} tooltip="Shorturls" link="/" />
-        <Navitem icon={faNetworkWired} tooltip="Pings" link="/" />
-        <Navitem icon={faBell} tooltip="Notifications" link="/" />
-        <Navitem icon={faRunning} tooltip="Emergency Shutdown" link="/" />
-        <Navitem icon={faFile} tooltip="Files" link="/" />
-        <Navitem icon={faDiscord} tooltip="Invites" link="/" />
-        <Navitem icon={faCodeBranch} tooltip="Update" link="/" />
+        <Navitem icon={faLink} tooltip="Shorturls" link="/shorturls" />
+        <Navitem icon={faNetworkWired} tooltip="Pings" link="/pings" />
+        <Navitem icon={faBell} tooltip="Notifications" link="/notification" />
+        <Navitem icon={faRunning} tooltip="Emergency Shutdown" link="/emergency" />
+        <Navitem icon={faFile} tooltip="Files" link="/files" />
+        <Navitem icon={faDiscord} tooltip="Invites" link="/invites" />
+        <Navitem icon={faCodeBranch} tooltip="Update" link="/update" />
       </ul>
       <ul>
         <Navitem icon={faCog} tooltip="Settings" rotateOnHover={true} link="/settings" />

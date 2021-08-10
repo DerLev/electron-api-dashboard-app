@@ -1,6 +1,6 @@
-import { ReactComponent as MinimizeSvg } from './minimize.svg';
-import { ReactComponent as MaximizeSvg } from './maximize.svg';
-import { ReactComponent as CloseSvg } from './close.svg';
+import { ReactComponent as MinimizeSvg } from '../minimize.svg';
+import { ReactComponent as MaximizeSvg } from '../maximize.svg';
+import { ReactComponent as CloseSvg } from '../close.svg';
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSyncAlt, faDownload } from '@fortawesome/free-solid-svg-icons';

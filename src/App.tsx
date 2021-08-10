@@ -1,8 +1,15 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Appbar from './Appbar';
-import Navbar from './Navbar';
+import Appbar from './components/Appbar';
+import Navbar from './components/Navbar';
 import Home from './Home';
 import Settings from './Settings';
+import Emergency from './Emergency';
+import Files from './Files';
+import Invites from './Invites';
+import Notifications from './Notifications';
+import Pings from './Pings';
+import Shorturls from './Shorturls';
+import Update from './Update';
 import SimpleBar from 'simplebar-react';
 import 'simplebar/dist/simplebar.min.css';
 
@@ -17,6 +24,27 @@ function App() {
             <Switch>
               <Route exact path="/">
                 <Home />
+              </Route>
+              <Route path="/shorturls">
+                <Shorturls />
+              </Route>
+              <Route path="/pings">
+                <Pings />
+              </Route>
+              <Route path="/notification">
+                <Notifications />
+              </Route>
+              <Route path="/emergency">
+                <Emergency />
+              </Route>
+              <Route path="/files">
+                <Files />
+              </Route>
+              <Route path="/invites">
+                <Invites />
+              </Route>
+              <Route path="/update">
+                <Update />
               </Route>
               <Route path="/settings">
                 <Settings />

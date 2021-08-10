@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Switch from "./Switch";
+import Switch from "./components/Switch";
 const ipc = window.require('electron').ipcRenderer;
 
 function Settings() {
