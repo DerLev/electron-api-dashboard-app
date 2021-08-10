@@ -1,0 +1,47 @@
+a {
+  @apply text-indigo-400;
+  
+  &:hover {
+    @apply underline;
+  }
+}
+
+h1 {
+  @apply text-3xl font-medium;
+}
+
+h2 {
+  @apply text-2xl font-medium;
+}
+
+h3 {
+  @apply text-xl font-medium;
+}
+
+h4 {
+  @apply text-lg font-medium;
+}
+
+h5 {
+  @apply text-base font-medium;
+}
+
+h6 {
+  @apply text-base;
+}
+
+.appBar {
+  -webkit-app-region: drag;
+
+  span {
+    -webkit-app-region: no-drag;
+    user-select: none;
+    -webkit-user-select: none;
+    font-size: .75rem;
+
+    svg {
+      width: .75rem;
+      height: .75rem;
+    }
+  }
+}
