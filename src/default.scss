@@ -55,3 +55,8 @@ h6 {
 .simplebar-scrollbar::before {
   background-color: theme('colors.gray.700') !important;
 }
+
+.Loader {
+  @apply border-2 border-gray-500 animate-spin;
+  border-top-color: theme('colors.black');
+}

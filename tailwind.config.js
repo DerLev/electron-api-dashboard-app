@@ -25,6 +25,8 @@ module.exports = {
       margin: ['first', 'last'],
       rotate: ['group-hover'],
       width: ['hover', 'group-hover'],
+      backgroundColor: ['active'],
+      cursor: ['disabled'],
     },
   },
   plugins: [],
