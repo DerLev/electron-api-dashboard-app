@@ -4,7 +4,11 @@ module.exports = {
   theme: {
     extend: {
       brightness: {
+        85: '.85',
         115: '1.15',
+      },
+      inset: {
+        1.5: '.375'
       }
     },
     fontFamily: {
