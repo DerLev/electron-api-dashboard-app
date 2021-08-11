@@ -27,6 +27,7 @@ module.exports = {
       width: ['hover', 'group-hover'],
       backgroundColor: ['active'],
       cursor: ['disabled'],
+      textColor: ['disabled'],
     },
   },
   plugins: [],

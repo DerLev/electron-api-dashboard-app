@@ -1,9 +1,14 @@
 import Login from "./Login";
 
-function Home() {
+interface homeProps {
+  setAccessToken: Function,
+  setRefreshToken: Function
+}
+
+function Home({ setAccessToken, setRefreshToken }: homeProps) {
   return (
     <>
-      <Login />
+      <Login setAccessToken={setAccessToken} setRefreshToken={setRefreshToken} />
     </>
   )
 }

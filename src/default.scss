@@ -58,5 +58,10 @@ h6 {
 
 .Loader {
   @apply border-2 border-gray-500 animate-spin;
+  border-top-color: theme('colors.white');
+}
+
+.LoaderLight {
+  @apply border-2 border-gray-500 animate-spin;
   border-top-color: theme('colors.black');
 }

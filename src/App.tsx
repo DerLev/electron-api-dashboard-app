@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import axios from 'axios';
 import Appbar from './components/Appbar';
 import Navbar from './components/Navbar';
 import Home from './Home';
@@ -13,7 +15,12 @@ import Update from './Update';
 import SimpleBar from 'simplebar-react';
 import 'simplebar/dist/simplebar.min.css';
 
+axios.defaults.baseURL = 'https://api.mc-mineserver.de/v3';
+
 function App() {
+  const [accessToken, setAccessToken] = useState();
+  const [refreshToken, setRefreshToken] = useState();
+
   return (
     <Router>
       <Appbar />
@@ -23,7 +30,7 @@ function App() {
           <SimpleBar forceVisible={"y"} autoHide={false} style={{ position: 'absolute', width: '100%', height: 'calc(100vh - 1.313rem)', overflowX: 'hidden' }} className="px-3 py-1">
             <Switch>
               <Route exact path="/">
-                <Home />
+                <Home setAccessToken={setAccessToken} setRefreshToken={setRefreshToken} />
               </Route>
               <Route path="/shorturls">
                 <Shorturls />
