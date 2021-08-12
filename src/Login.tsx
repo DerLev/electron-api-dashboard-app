@@ -47,7 +47,7 @@ function Login({ setAccessToken, setRefreshToken }: loginProps) {
         <form className="mt-2" onSubmit={loginSubmit}>
           <Input type='email' placeholder='Email' light={true} value={email} onChange={changeEmail} disabled={loading} />
           <Input type='password' placeholder='Password' light={true} value={password} onChange={changePassword} disabled={loading} />
-          <Button text="Login" type='submit' block={true} light={true} className="my-3" loading={loading} />
+          <Button text="Login" type='submit' block={true} light={true} className="mb-3 mt-6" loading={loading} color='primary' />
         </form>
       </div>
     </>
