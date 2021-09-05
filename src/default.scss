@@ -1,11 +1,3 @@
-a {
-  @apply text-indigo-400;
-  
-  &:hover {
-    @apply underline;
-  }
-}
-
 h1 {
   @apply text-3xl font-medium;
   font-family: theme('fontFamily.heading');
@@ -39,7 +31,7 @@ h6 {
 nav {
   -webkit-app-region: drag;
 
-  button, a {
+  button, a, #ctxMenu {
     -webkit-app-region: no-drag;
   }
 }
@@ -56,4 +48,16 @@ nav {
 .LoaderLight {
   @apply border-2 border-gray-500 animate-spin;
   border-top-color: theme('colors.black');
+}
+
+input {
+  @apply block focus:outline-none w-full bg-gray-600 my-2 rounded-md py-2 px-3 text-sm text-white shadow focus:ring-1 focus:ring-offset-1 focus:ring-offset-gray-500 focus:ring-white transition duration-150;
+}
+
+label {
+  @apply font-light text-gray-300 text-sm -mb-1 block;
+}
+
+button {
+  @apply text-gray-300 bg-gray-800 hover:bg-gray-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-150 my-2 ;
 }
