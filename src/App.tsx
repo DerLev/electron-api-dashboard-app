@@ -12,6 +12,7 @@ import Notifications from './Notifications';
 import Pings from './Pings';
 import Shorturls from './Shorturls';
 import Update from './Update';
+import Notification from './components/Notification';
 import SimpleBar from 'simplebar-react';
 import 'simplebar/dist/simplebar.min.css';
 
@@ -20,6 +21,14 @@ axios.defaults.baseURL = 'https://api.mc-mineserver.de/v3';
 function App() {
   const [accessToken, setAccessToken] = useState();
   const [refreshToken, setRefreshToken] = useState();
+  const [notification, setNotification] = useState({ show: false, content: '' });
+
+  const addNotification = (content:string) => {
+    setNotification({ show: true, content: content});
+    setTimeout(() => {
+      setNotification({ show: false, content: '' });
+    }, 5000);
+  }
 
   return (
     <Router>
@@ -27,10 +36,11 @@ function App() {
       <div className="flex flex-row flex-grow">
         <Navbar />
         <div className="w-full relative">
+          <Notification notification={notification} />
           <SimpleBar forceVisible={"y"} autoHide={false} style={{ position: 'absolute', width: '100%', height: 'calc(100vh - 1.313rem)', overflowX: 'hidden' }} className="px-3 py-1">
             <Switch>
               <Route exact path="/">
-                <Home setAccessToken={setAccessToken} setRefreshToken={setRefreshToken} />
+                <Home setAccessToken={setAccessToken} setRefreshToken={setRefreshToken} addNotification={addNotification} />
               </Route>
               <Route path="/shorturls">
                 <Shorturls />

@@ -5,10 +5,11 @@ import Button from "./components/Button";
 
 interface loginProps {
   setAccessToken: Function,
-  setRefreshToken: Function
+  setRefreshToken: Function,
+  addNotification: Function
 }
 
-function Login({ setAccessToken, setRefreshToken }: loginProps) {
+function Login({ setAccessToken, setRefreshToken, addNotification }: loginProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -33,8 +34,10 @@ function Login({ setAccessToken, setRefreshToken }: loginProps) {
     } catch(err) {
       if(err.response) {
         console.log(err.response.data);
+        addNotification(err.response.data.message.toString());
       } else {
         console.log(err);
+        addNotification(err.toString());
       }
     }
     setLoading(false);
