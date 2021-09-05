@@ -36,19 +36,11 @@ h6 {
   font-family: theme('fontFamily.heading');
 }
 
-.appBar {
+nav {
   -webkit-app-region: drag;
 
-  span {
+  button, a {
     -webkit-app-region: no-drag;
-    user-select: none;
-    -webkit-user-select: none;
-    font-size: .75rem;
-
-    svg {
-      width: .75rem;
-      height: .75rem;
-    }
   }
 }
 

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Switch from "./components/Switch";
+// import Switch from "./components/Switch";
 const ipc = window.require('electron').ipcRenderer;
 
 function Settings() {
@@ -54,7 +54,7 @@ function Option({ checkbox, setCheckbox, title, description }: optionProps) {
         <p className="text-sm">{description}</p>
       </div>
       <div>
-        <Switch checkbox={checkbox} setCheckbox={setCheckbox} />
+        {/* <Switch checkbox={checkbox} setCheckbox={setCheckbox} /> */}
       </div>
     </div>
   )

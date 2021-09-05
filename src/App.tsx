@@ -1,76 +1,251 @@
-import { useState } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { useState, useEffect, Fragment } from 'react';
+import { Disclosure, Menu, Transition } from '@headlessui/react';
+import { BellIcon, MenuIcon, XIcon, UserIcon, DownloadIcon, RefreshIcon } from '@heroicons/react/outline';
 import axios from 'axios';
-import Appbar from './components/Appbar';
-import Navbar from './components/Navbar';
-import Home from './Home';
-import Settings from './Settings';
-import Emergency from './Emergency';
-import Files from './Files';
-import Invites from './Invites';
-import Notifications from './Notifications';
-import Pings from './Pings';
-import Shorturls from './Shorturls';
-import Update from './Update';
-import Notification from './components/Notification';
-import SimpleBar from 'simplebar-react';
-import 'simplebar/dist/simplebar.min.css';
+import { ReactComponent as MinimizeSvg } from './minimize.svg';
+import { ReactComponent as MaximizeSvg } from './maximize.svg';
+import { ReactComponent as CloseSvg } from './close.svg';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSyncAlt, faDownload } from '@fortawesome/free-solid-svg-icons';
+const ipc = window.require('electron').ipcRenderer
 
 axios.defaults.baseURL = 'https://api.mc-mineserver.de/v3';
 
-function App() {
-  const [accessToken, setAccessToken] = useState();
-  const [refreshToken, setRefreshToken] = useState();
-  const [notification, setNotification] = useState({ show: false, content: '' });
+const user = {
+  name: 'Tom Cook',
+  email: 'tom@example.com',
+  imageUrl:
+    'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+}
+const navigation = [
+  { name: 'Dashboard', href: '#', current: true },
+  { name: 'Team', href: '#', current: false },
+  { name: 'Projects', href: '#', current: false },
+  { name: 'Calendar', href: '#', current: false },
+  { name: 'Reports', href: '#', current: false },
+]
+const userNavigation = [
+  { name: 'Your Profile', href: '#' },
+  { name: 'Settings', href: '#' },
+  { name: 'Sign out', href: '#' },
+]
 
-  const addNotification = (content:string) => {
-    setNotification({ show: true, content: content});
-    setTimeout(() => {
-      setNotification({ show: false, content: '' });
-    }, 5000);
+function classNames(...classes: any[]) {
+  return classes.filter(Boolean).join(' ')
+}
+
+function App() {
+  const minimize = async () => {
+    await ipc.send('window', 'minimize');
   }
 
-  return (
-    <Router>
-      <Appbar />
-      <div className="flex flex-row flex-grow">
-        <Navbar />
-        <div className="w-full relative">
-          <Notification notification={notification} />
-          <SimpleBar forceVisible={"y"} autoHide={false} style={{ position: 'absolute', width: '100%', height: 'calc(100vh - 1.313rem)', overflowX: 'hidden' }} className="px-3 py-1">
-            <Switch>
-              <Route exact path="/">
-                <Home setAccessToken={setAccessToken} setRefreshToken={setRefreshToken} addNotification={addNotification} />
-              </Route>
-              <Route path="/shorturls">
-                <Shorturls />
-              </Route>
-              <Route path="/pings">
-                <Pings />
-              </Route>
-              <Route path="/notification">
-                <Notifications />
-              </Route>
-              <Route path="/emergency">
-                <Emergency />
-              </Route>
-              <Route path="/files">
-                <Files />
-              </Route>
-              <Route path="/invites">
-                <Invites />
-              </Route>
-              <Route path="/update">
-                <Update />
-              </Route>
-              <Route path="/settings">
-                <Settings />
-              </Route>
-            </Switch>
-          </SimpleBar>
+  const maximize = async () => {
+    await ipc.send('window', 'maximize');
+  }
+
+  const close = async () => {
+    await ipc.send('window', 'close');
+  }
+
+  const restart = async () => {
+    await ipc.send('app', 'update')
+  }
+
+  const ctxMenu = async () => {
+    await ipc.send('menu', 'appBar')
+  }
+
+  const [update, setUpdate] = useState('none');
+
+  ipc.on('update', (e:any, arg:any) => {
+    if(arg === 'available') {
+      setUpdate('available');
+    }
+
+    if(arg === 'downloaded') {
+      setUpdate('downloaded');
+    }
+  });
+
+  return(
+    <div>
+      <Disclosure as="nav" className="bg-gray-800 select-none pb-3">
+        {({ open }) => (
+          <>
+            <div className="flex justify-end -mb-3">
+              {
+                update === 'downloaded' &&
+                <button className="text-gray-500 hover:text-white hover:bg-green-500 transition duration-500 cursor-pointer px-2 flex items-center justify-center focus:outline-none" onClick={restart}>
+                  <RefreshIcon className="w-3 h-3" />
+                  <RefreshIcon className="animate-ping absolute opacity-40 w-3 h-3" />
+                </button>
+              }
+              {
+                update === 'available' &&
+                <button className="text-gray-500 px-2 cursor-wait focus:outline-none">
+                  <DownloadIcon className="animate-pulse w-3 h-3" />
+                </button>
+              }
+              <button className="text-gray-500 hover:text-gray-400 bg-transparent hover:bg-gray-800 cursor-pointer transition duration-500 py-1 px-2 focus:outline-none" onClick={minimize}>
+                <MinimizeSvg className="h-3 w-3" />
+              </button>
+              <button className="text-gray-500 hover:text-gray-400 bg-transparent hover:bg-gray-800 cursor-pointer transition duration-500 py-1 px-2 focus:outline-none" onClick={maximize}>
+                <MaximizeSvg className="h-3 w-3" />
+              </button>
+              <button className="text-gray-500 hover:text-white bg-transparent hover:bg-red-500 cursor-pointer transition duration-500 py-1 px-2 focus:outline-none" onClick={close}>
+                <CloseSvg className="h-3 w-3" />
+              </button>
+            </div>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="flex items-center justify-between h-16">
+                <div className="flex items-center">
+                  <div className="flex-shrink-0">
+                    <img
+                      className="h-8 w-8"
+                      src="https://api.mc-mineserver.de/v3/files/22a6bf06d5cdaef170979cdd35a26a32.svg"
+                      alt="McMineserver"
+                    />
+                  </div>
+                  <div className="hidden md:block">
+                    <div className="ml-10 flex items-baseline space-x-4">
+                      {navigation.map((item) => (
+                        <a
+                          key={item.name}
+                          href={item.href}
+                          className={classNames(
+                            item.current
+                              ? 'bg-gray-900 text-white'
+                              : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                            'px-3 py-2 rounded-md text-sm font-medium'
+                          )}
+                          aria-current={item.current ? 'page' : undefined}
+                        >
+                          {item.name}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <div className="hidden md:block">
+                  <div className="ml-4 flex items-center md:ml-6">
+                    <button
+                      type="button"
+                      className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                    >
+                      <span className="sr-only">View notifications</span>
+                      <BellIcon className="h-6 w-6" aria-hidden="true" />
+                    </button>
+
+                    {/* Profile dropdown */}
+                    <Menu as="div" className="ml-3 relative">
+                      <div>
+                        <Menu.Button className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                          <span className="sr-only">Open user menu</span>
+                          <UserIcon className="h-6 w-6 rounded-full" />
+                        </Menu.Button>
+                      </div>
+                      <Transition
+                        as={Fragment}
+                        enter="transition ease-out duration-100"
+                        enterFrom="transform opacity-0 scale-95"
+                        enterTo="transform opacity-100 scale-100"
+                        leave="transition ease-in duration-75"
+                        leaveFrom="transform opacity-100 scale-100"
+                        leaveTo="transform opacity-0 scale-95"
+                      >
+                        <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                          {userNavigation.map((item) => (
+                            <Menu.Item key={item.name}>
+                              {({ active }) => (
+                                <a
+                                  href={item.href}
+                                  className={classNames(
+                                    active ? 'bg-gray-100' : '',
+                                    'block px-4 py-2 text-sm text-gray-700'
+                                  )}
+                                >
+                                  {item.name}
+                                </a>
+                              )}
+                            </Menu.Item>
+                          ))}
+                        </Menu.Items>
+                      </Transition>
+                    </Menu>
+                  </div>
+                </div>
+                <div className="-mr-2 flex md:hidden">
+                  {/* Mobile menu button */}
+                  <Disclosure.Button className="bg-gray-800 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                    <span className="sr-only">Open main menu</span>
+                    {open ? (
+                      <XIcon className="block h-6 w-6" aria-hidden="true" />
+                    ) : (
+                      <MenuIcon className="block h-6 w-6" aria-hidden="true" />
+                    )}
+                  </Disclosure.Button>
+                </div>
+              </div>
+            </div>
+
+            <Disclosure.Panel className="md:hidden">
+              <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                {navigation.map((item) => (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    className={classNames(
+                      item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                      'block px-3 py-2 rounded-md text-base font-medium'
+                    )}
+                    aria-current={item.current ? 'page' : undefined}
+                  >
+                    {item.name}
+                  </a>
+                ))}
+              </div>
+              <div className="pt-4 pb-3 border-t border-gray-700">
+                <div className="flex items-center px-5">
+                  <div className="flex-shrink-0 text-gray-400">
+                    <UserIcon className="h-10 w-10 rounded-full" />
+                  </div>
+                  <div className="ml-3">
+                    <div className="text-base font-medium leading-none text-white">{user.name}</div>
+                    <div className="text-sm font-medium leading-none text-gray-400">{user.email}</div>
+                  </div>
+                </div>
+                <div className="mt-3 px-2 space-y-1">
+                  {userNavigation.map((item) => (
+                    <a
+                      key={item.name}
+                      href={item.href}
+                      className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700"
+                    >
+                      {item.name}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </Disclosure.Panel>
+          </>
+        )}
+      </Disclosure>
+
+      <header className="bg-white shadow">
+        <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+          <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
         </div>
-      </div>
-    </Router>
+      </header>
+      <main>
+        <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+          {/* Replace with your content */}
+          <div className="px-4 py-6 sm:px-0">
+            <div className="border-4 border-dashed border-gray-200 rounded-lg h-96" />
+          </div>
+          {/* /End replace */}
+        </div>
+      </main>
+    </div>
   );
 }
 
