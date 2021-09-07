@@ -7,6 +7,7 @@ import 'simplebar/dist/simplebar.min.css';
 
 import Navbar from './components/Navbar';
 import Home from './Home';
+import Settings from './Settings';
 
 axios.defaults.baseURL = 'https://api.mc-mineserver.de/v3';
 
@@ -32,6 +33,9 @@ function App() {
                 <Switch>
                   <Route exact path="/">
                     <Home setTitle={setTitle} />
+                  </Route>
+                  <Route path="/settings">
+                    <Settings setTitle={setTitle} />
                   </Route>
                   <Route path="*">
                     <NotFound setTitle={setTitle} />

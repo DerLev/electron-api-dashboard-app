@@ -185,48 +185,54 @@ function Navbar() {
           </div>
 
           <Disclosure.Panel className="lg:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  className={classNames(
-                    location.pathname === item.href ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                    'block px-3 py-2 rounded-md text-base font-medium'
-                  )}
-                  aria-current={location.pathname === item.href ? 'page' : undefined}
-                  draggable={false}
-                >
-                  {item.name}
-                </Link>
-              ))}
-            </div>
-            <div className="pt-4 pb-3 border-t border-gray-700">
-              <div className="flex items-center px-5">
-                <div className="flex-shrink-0 text-gray-400">
-                  <UserIcon className="h-10 w-10 rounded-full" />
+            {({ close }) => (
+              <>
+                <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                  {navigation.map((item) => (
+                    <Link
+                      key={item.name}
+                      to={item.href}
+                      className={classNames(
+                        location.pathname === item.href ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                        'block px-3 py-2 rounded-md text-base font-medium'
+                      )}
+                      aria-current={location.pathname === item.href ? 'page' : undefined}
+                      draggable={false}
+                      onClick={() => close()}
+                    >
+                      {item.name}
+                    </Link>
+                  ))}
                 </div>
-                <div className="ml-3">
-                  <div className="text-base font-medium leading-none text-white">{user.name}</div>
-                  <div className="text-sm font-medium leading-none text-gray-400">{user.email}</div>
+                <div className="pt-4 pb-3 border-t border-gray-700">
+                  <div className="flex items-center px-5">
+                    <div className="flex-shrink-0 text-gray-400">
+                      <UserIcon className="h-10 w-10 rounded-full" />
+                    </div>
+                    <div className="ml-3">
+                      <div className="text-base font-medium leading-none text-white">{user.name}</div>
+                      <div className="text-sm font-medium leading-none text-gray-400">{user.email}</div>
+                    </div>
+                  </div>
+                  <div className="mt-3 px-2 space-y-1">
+                    {userNavigation.map((item) => (
+                      <Link
+                        key={item.name}
+                        to={item.href}
+                        className={classNames(
+                          location.pathname === item.href ? 'bg-gray-900 text-white' : 'text-gray-400 hover:text-white hover:bg-gray-700',
+                          'block px-3 py-2 rounded-md text-base font-medium'
+                        )}
+                        draggable={false}
+                        onClick={() => close()}
+                      >
+                        {item.name}
+                      </Link>
+                    ))}
+                  </div>
                 </div>
-              </div>
-              <div className="mt-3 px-2 space-y-1">
-                {userNavigation.map((item) => (
-                  <Link
-                    key={item.name}
-                    to={item.href}
-                    className={classNames(
-                      location.pathname === item.href ? 'bg-gray-900 text-white' : 'text-gray-400 hover:text-white hover:bg-gray-700',
-                      'block px-3 py-2 rounded-md text-base font-medium'
-                    )}
-                    draggable={false}
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-              </div>
-            </div>
+              </>
+            )}
           </Disclosure.Panel>
         </>
       )}

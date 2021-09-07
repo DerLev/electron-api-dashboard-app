@@ -8,7 +8,7 @@ interface buttonProps {
 
 function Button({ type, text, block, disabled, color }: buttonProps) {
   return (
-    <button type={type} className={`
+    <button type={type} disabled={disabled} className={`
       ${block ? 'block w-full' : 'mx-2 first:ml-0 last:mr-0'}
       ${disabled ? 'hover:bg-gray-800 hover:text-gray-300 cursor-not-allowed opacity-50' : ''}
       ${color === "red" ? `bg-red-600 hover:bg-red-500 ${disabled ? 'hover:bg-red-600' : ''}` : ''}
